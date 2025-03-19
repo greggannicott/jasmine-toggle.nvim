@@ -22,14 +22,14 @@ local function find_ancestor_function_call_by_names(node, names)
 	return find_ancestor_function_call_by_names(node:parent(), names)
 end
 
-m.toggle_describe = function()
-	-- Find parent describe function statement
+local function toggle_function_call(function_names)
+	-- Find parent function call statement
 	local current_node = vim.treesitter.get_node()
-	local describe_function_node = find_ancestor_function_call_by_names(current_node, { "describe", "fdescribe" })
-	if describe_function_node then
-		local func_call_start_row, func_call_start_col = describe_function_node:start()
-		if get_function_name(describe_function_node) == "describe" then
-			-- Rename function to fdescribe
+	local function_call_node = find_ancestor_function_call_by_names(current_node, function_names)
+	if function_call_node then
+		local func_call_start_row, func_call_start_col = function_call_node:start()
+		if get_function_name(function_call_node) == function_names[1] then
+			-- Prefix function with prefix character (eg. f)
 			vim.api.nvim_buf_set_text(
 				0,
 				func_call_start_row,
@@ -39,7 +39,7 @@ m.toggle_describe = function()
 				{ "f" }
 			)
 		else
-			-- Rename function to describe
+			-- Remove prefix character
 			vim.api.nvim_buf_set_text(
 				0,
 				func_call_start_row,
@@ -50,6 +50,14 @@ m.toggle_describe = function()
 			)
 		end
 	end
+end
+
+m.toggle_describe = function()
+	toggle_function_call({ "describe", "fdescribe" })
+end
+
+m.toggle_it = function()
+	toggle_function_call({ "it", "fit" })
 end
 
 m.setup = function()
