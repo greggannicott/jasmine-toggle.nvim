@@ -52,11 +52,11 @@ local function toggle_function_call(function_names)
 	end
 end
 
-m.toggle_describe = function()
+m.toggle_describe_focus = function()
 	toggle_function_call({ "describe", "fdescribe" })
 end
 
-m.toggle_it = function()
+m.toggle_it_focus = function()
 	toggle_function_call({ "it", "fit" })
 end
 
