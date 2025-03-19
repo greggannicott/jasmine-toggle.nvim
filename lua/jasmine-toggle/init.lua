@@ -64,6 +64,10 @@ m.toggle_describe_skip = function()
 	toggle_function_call({ "describe", "xdescribe" }, "x")
 end
 
+m.toggle_it_skip = function()
+	toggle_function_call({ "it", "xit" }, "x")
+end
+
 m.setup = function()
 	-- No setup currently required, but I've read you should always have one.
 end
