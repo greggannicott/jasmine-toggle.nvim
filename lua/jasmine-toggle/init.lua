@@ -22,7 +22,7 @@ local function find_ancestor_function_call_by_names(node, names)
 	return find_ancestor_function_call_by_names(node:parent(), names)
 end
 
-local function toggle_function_call(function_names)
+local function toggle_function_call(function_names, prefix)
 	-- Find parent function call statement
 	local current_node = vim.treesitter.get_node()
 	local function_call_node = find_ancestor_function_call_by_names(current_node, function_names)
@@ -36,7 +36,7 @@ local function toggle_function_call(function_names)
 				func_call_start_col,
 				func_call_start_row,
 				func_call_start_col,
-				{ "f" }
+				{ prefix }
 			)
 		else
 			-- Remove prefix character
@@ -53,11 +53,15 @@ local function toggle_function_call(function_names)
 end
 
 m.toggle_describe_focus = function()
-	toggle_function_call({ "describe", "fdescribe" })
+	toggle_function_call({ "describe", "fdescribe" }, "f")
 end
 
 m.toggle_it_focus = function()
-	toggle_function_call({ "it", "fit" })
+	toggle_function_call({ "it", "fit" }, "f")
+end
+
+m.toggle_describe_skip = function()
+	toggle_function_call({ "describe", "xdescribe" }, "x")
 end
 
 m.setup = function()
