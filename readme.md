@@ -2,6 +2,18 @@
 
 A simple plugin to toggle the state of Jasmine tests.
 
+## Installation
+
+### Lazy
+
+```lua
+{
+    "greggannicott/jasmine-toggle.nvim",
+    -- Required if you wish to use treesitter captures to move to next/previous test
+    lazy = true
+}
+```
+
 ## Usage
 
 ### Focussing/Blurring a `describe`
